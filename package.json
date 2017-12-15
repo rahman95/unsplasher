@@ -18,7 +18,7 @@
   "homepage": "https://github.com/rahman95/unsplasher#readme",
   "dependencies": {
     "dotenv": "^4.0.0",
-    "unsplash-api": "^1.2.0",
+    "unsplash-js": "^4.8.0",
     "wallpaper": "^2.6.0"
   }
 }
