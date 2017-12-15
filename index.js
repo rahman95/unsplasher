@@ -9,7 +9,7 @@ const unsplash = new Unsplash({
   callbackUrl: process.env.CALLBACK_URL
 });
 
-var getrandomImage = new Promise(
+var getRandomImage = new Promise(
     function (resolve, reject) {
         unsplash.photos.getRandomPhoto({
             height: process.env.HEIGHT || 1080,
@@ -18,16 +18,15 @@ var getrandomImage = new Promise(
         }).then(toJson).then(image => {
             if(image){
                 var randomImage = {
-                    "id": image.id,
-                    "width": image.width,
-                    "height": image.height,
-                    "download": image.links.download,
-                    "user": {
-                        "username": image.user.username,
-                        "name": image.user.name
+                    'id': image.id,
+                    'width': image.width,
+                    'height': image.height,
+                    'download': image.links.download,
+                    'user': {
+                        'username': image.user.username,
+                        'name': image.user.name
                     }
-                }
-                console.log(randomImage);
+                };
                 resolve(randomImage);
             }else{
                 reject(new Error('An error occured')); // reject
@@ -36,6 +35,16 @@ var getrandomImage = new Promise(
     }
 );
 
+var getImageDetails = function () {
+    getRandomImage.then(function (image) {
+        return image;
+    })
+    .catch(function (error) {
+        console.log(error.message);
+    });
+};
+
+getImageDetails();
 
 // wallpaper.set('unicorn.jpg').then(() => {
 //     console.log('done');
