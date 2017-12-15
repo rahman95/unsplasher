@@ -9,14 +9,32 @@ const unsplash = new Unsplash({
   callbackUrl: process.env.CALLBACK_URL
 });
 
-unsplash.photos.getRandomPhoto({
-    height: process.env.HEIGHT || 1080,
-    width: process.env.WIDTH || 1920,
-    featured: process.env.FEATURED || true,
-}).then(toJson).then(json => {
-    console.log(json);
-});
-
+var getrandomImage = new Promise(
+    function (resolve, reject) {
+        unsplash.photos.getRandomPhoto({
+            height: process.env.HEIGHT || 1080,
+            width: process.env.WIDTH || 1920,
+            featured: process.env.FEATURED || true,
+        }).then(toJson).then(image => {
+            if(image){
+                var randomImage = {
+                    "id": image.id,
+                    "width": image.width,
+                    "height": image.height,
+                    "download": image.links.download,
+                    "user": {
+                        "username": image.user.username,
+                        "name": image.user.name
+                    }
+                }
+                console.log(randomImage);
+                resolve(randomImage);
+            }else{
+                reject(new Error('An error occured')); // reject
+            }
+        });
+    }
+);
 
 
 // wallpaper.set('unicorn.jpg').then(() => {
