@@ -1,5 +1,7 @@
 require('dotenv').config();
-import Unsplash from 'unsplash-js';
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+import Unsplash, { toJson } from 'unsplash-js';
 const wallpaper = require('wallpaper');
 const unsplash = new Unsplash({
   applicationId: process.env.CLIENT_ID,
@@ -7,16 +9,13 @@ const unsplash = new Unsplash({
   callbackUrl: process.env.CALLBACK_URL
 });
 
-unsplash.photos.getRandomPhoto(
-    {
-     height: process.env.HEIGHT || 1080,
-     width: process.env.WIDTH || 1920,
-     featured: process.env.FEATURED || true,
-    }
-).then(toJson)
-.then(json => {
-    // Your code
-  });
+unsplash.photos.getRandomPhoto({
+    height: process.env.HEIGHT || 1080,
+    width: process.env.WIDTH || 1920,
+    featured: process.env.FEATURED || true,
+}).then(toJson).then(json => {
+    console.log(json);
+});
 
 
 
