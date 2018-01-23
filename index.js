@@ -46,6 +46,10 @@ var download = function(image) {
         response.pipe(file);
         file.on('finish', function() {
             file.close();
+			console.log(image)
+			wallpaper.set(file.path).then(() => {
+				console.log(`New Wallpaper courtesy of ${image.user.name}`);
+			});
         });
     });
 };
@@ -60,7 +64,3 @@ var getImageDetails = function () {
 };
 
 getImageDetails();
-
-// wallpaper.set('unicorn.jpg').then(() => {
-//     console.log('done');
-// });
